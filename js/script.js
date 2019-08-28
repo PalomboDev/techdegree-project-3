@@ -196,16 +196,19 @@ function handleValid(element) {
 }
 
 
-function handleSubmit() {
+function handleSubmit(eventTarget) {
+    let valid = true;
 
     if (isEmpty(nameInput.value)) {
         handleInvalid(nameInput);
+        valid = false;
     } else {
         handleValid(nameInput);
     }
 
     if (!validateEmail(emailInput.value)) {
         handleInvalid(emailInput);
+        valid = false;
     } else {
         handleValid(emailInput);
     }
@@ -217,6 +220,7 @@ function handleSubmit() {
 
     if (checkedCheckboxes.length === 0) {
         handleInvalid(activityFieldSet);
+        valid = false;
     } else {
         handleValid(activityFieldSet);
     }
@@ -228,6 +232,7 @@ function handleSubmit() {
 
         if (!isNumberTrimmed(cardNumber.value) || !(cardNumber.value.length >= 13 && cardNumber.value.length <= 16)) {
             handleInvalid(cardNumber);
+            valid = false;
 
             if (trimSpaces(cardNumber.value) === "") {
                 cardNumber.placeholder = "Input was blank";
@@ -244,14 +249,20 @@ function handleSubmit() {
 
         if (!isNumberTrimmed(zipCodeNumber.value) || zipCodeNumber.value.length !== 5) {
             handleInvalid(zipCodeNumber);
+            valid = false;
         } else {
             handleValid(zipCodeNumber);
         }
 
         if (!isNumberTrimmed(cvvNumber.value) || cvvNumber.value.length !== 3) {
             handleInvalid(cvvNumber);
+            valid = false;
         } else {
             handleValid(cvvNumber);
+        }
+
+        if (valid) {
+            eventTarget.preventDefault();
         }
     }
 }
@@ -412,7 +423,6 @@ paymentSelection.addEventListener("click", (event) => {
 });
 
 registerButton.addEventListener("click", (event) => {
-    event.preventDefault();
 
-    handleSubmit();
+    handleSubmit(event.target);
 });
