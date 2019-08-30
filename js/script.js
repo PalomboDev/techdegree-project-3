@@ -196,7 +196,7 @@ function handleValid(element) {
 }
 
 
-function handleSubmit(eventTarget) {
+function handleSubmit(event) {
     let valid = true;
 
     if (isEmpty(nameInput.value)) {
@@ -261,9 +261,10 @@ function handleSubmit(eventTarget) {
             handleValid(cvvNumber);
         }
 
-        if (valid) {
-            eventTarget.preventDefault();
-        }
+    }
+
+    if (!valid) {
+        event.preventDefault();
     }
 }
 
@@ -424,5 +425,5 @@ paymentSelection.addEventListener("click", (event) => {
 
 registerButton.addEventListener("click", (event) => {
 
-    handleSubmit(event.target);
+    handleSubmit(event);
 });
